@@ -38,13 +38,18 @@ function ShowNotes(props){
   console.log(selected)
   console.log(gotFiles)
   console.log(files)
-  // return <Note name='bob' link='barley'></Note>
+  // debugger;
   if(selected && gotFiles){
     return (<div className="notesContainer">
       <h1>ur files sir</h1>
+      {/* <Note name={files[0][0]} link={files[0][1]}></Note> */}
       {
-        files.forEach(f =>{
-          <Note props={f}/>
+        files.map(function(f){
+          console.log("f is ", f);
+          // debugger;
+          return(
+            <Note name={f[0]} link="https://drive.google.com/file/d/1U263jFEm_06Cl7EMxrQoauqDIEweaY9q/preview" key={f[0]} />
+          )
         })
       }
 
@@ -100,7 +105,7 @@ class App extends React.Component {
     console.log('option1 picked is: ', this.state.option1)
     this.setState({allSet: true})
     const arr = await getnotes(this.state.option1.label, this.state.option.label)
-    this.setState({ files: arr })
+    await this.setState({ files: arr })
     console.log('this is files: ', this.state.files)
     this.setState({ gotFile: true })
 
@@ -139,25 +144,13 @@ class App extends React.Component {
           </div>
           : null}
         <ShowNotes selected={this.state.allSet} gotfile={this.state.gotFile} files={this.state.files} />
-        {/* <Note name="joe" link="mama"/>
-          <Note name="joe" link="mama"/>
-          <Note name="joe" link="mama"/>
-          <Note name="joe" link="mama"/> */}
+
       </div>
     );
   }
 }
 
-// class App1 extends React.Component {
 
-//   render() {
-//     return (
-//       <div className="App">
-//         <Select name="options2" options={options1} />
-//       </div>
-//     );
-//   }
-// }
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
